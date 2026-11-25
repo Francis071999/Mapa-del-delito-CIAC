@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-primary: #080c14;
+  --bg-card: rgba(15, 23, 42, 0.92);
+  --bg-surface: #131d31;
+  --bg-surface-hover: #1e293b;
+  --text-main: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(8, 12, 20, 0.95);
+  --shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.theme-light {
+  --bg-primary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f8fafc;
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --accent: #1d4ed8;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --navbar-bg: rgba(255, 255, 255, 0.98);
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* NAVBAR CIAC */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.8rem;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.btn-nav, .btn-principal, .btn-secundario {
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: var(--transition);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-family: inherit;
+}
+
+.btn-principal, .btn-nav.principal {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.btn-principal:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+}
+
+/* LAYOUT ESTRUCTURAL SIG INSPIRADO EN EL VIDEO */
+.sig-layout {
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 62px);
+  overflow: hidden;
+  position: relative;
+}
+
+/* DRAWER / PANEL IZQUIERDO DE FILTROS */
+.sig-filter-panel {
+  width: 380px;
+  min-width: 320px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  z-index: 10;
+  transition: var(--transition);
+}
+
+@media (max-width: 850px) {
+  .sig-layout { flex-direction: column; height: auto; }
+  .sig-filter-panel { width: 100%; height: auto; }
+}
+
+.sig-map-container {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: #090d16;
+}
+
+.sig-map-element {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+}
+
+/* TOGGLES TIPO SWITCH */
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--bg-surface-hover);
+  border: 1px solid var(--border-color);
+  transition: .3s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--accent); }
+input:checked + .slider:before { transform: translateX(18px); }
+
+/* CONTROLES FLOTANTES EN EL MAPA (INFERIOR/ESTADÍSTICAS) */
+.stats-floating-bar {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  width: 90%;
+  max-width: 850px;
+  box-shadow: var(--shadow);
+}
+
+.excel-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.excel-table th {
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--text-main);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.excel-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
